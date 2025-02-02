@@ -79,6 +79,74 @@ const CreateListing = () => {
             </label>
           </div>
         </div>
+
+        {/* Offer Section */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sky-700 font-semibold">Offer</label>
+          <div className="flex gap-4">
+            {/* Beds Input */}
+            <div className="flex flex-col gap-2 w-1/4">
+              <label className="text-sky-700">Beds</label>
+              <input
+                type="number"
+                placeholder="Enter beds"
+                className="p-2 border border-sky-300 rounded-md"
+              />
+            </div>
+
+            {/* Baths Input */}
+            <div className="flex flex-col gap-2 w-1/4">
+              <label className="text-sky-700">Baths</label>
+              <input
+                type="number"
+                placeholder="Enter baths"
+                className="p-2 border border-sky-300 rounded-md"
+              />
+            </div>
+
+            {/* Regular Price Input */}
+            <div className="flex flex-col gap-2 w-1/4">
+              <label className="text-sky-700">Regular price ($ / month)</label>
+              <input
+                type="number"
+                placeholder="Enter regular price"
+                className="p-2 border border-sky-300 rounded-md"
+              />
+            </div>
+
+            {/* Discounted Price Input */}
+            <div className="flex flex-col gap-2 w-1/4">
+              <label className="text-sky-700">Discounted price ($ / month)</label>
+              <input
+                type="number"
+                placeholder="Enter discounted price"
+                className="p-2 border border-sky-300 rounded-md"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Image Upload Section */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sky-700 font-semibold">
+            Images: The first image will be the cover (max 6)
+          </label>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            className="p-2 border border-sky-300 rounded-md"
+          />
+          <p className="text-sm text-gray-500">Choose Files No file chosen</p>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="bg-sky-700 text-white px-6 py-2 rounded-md hover:bg-sky-900 transition-colors duration-200"
+        >
+          CREATE LISTING
+        </button>
       </form>
     </div>
   );
