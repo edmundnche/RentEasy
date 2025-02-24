@@ -33,7 +33,7 @@ export default function Header() {
                             Favourites
                         </li>
                     </Link>
-                    <Link href='/about'>
+                    <Link href='/about-page'>
                         <li className='hidden md:inline text-orange-700 hover:underline'>
                             About
                         </li>
