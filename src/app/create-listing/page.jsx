@@ -13,6 +13,7 @@ import {
 
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function CreateListing() {
   const { isSignedIn, user, isLoaded } = useUser();
@@ -181,7 +182,7 @@ export default function CreateListing() {
           <input
             type='text'
             placeholder='Name'
-            className='border p-3 rounded-lg'
+            className='border p-3 rounded-lg text-black'
             id='name'
             maxLength='62'
             minLength='10'
@@ -192,7 +193,7 @@ export default function CreateListing() {
           <textarea
             type='text'
             placeholder='Description'
-            className='border p-3 rounded-lg'
+            className='border p-3 rounded-lg text-black'
             id='description'
             required
             onChange={handleChange}
@@ -201,7 +202,7 @@ export default function CreateListing() {
           <input
             type='text'
             placeholder='Address'
-            className='border p-3 rounded-lg'
+            className='border p-3 rounded-lg text-black'
             id='address'
             required
             onChange={handleChange}
@@ -267,7 +268,7 @@ export default function CreateListing() {
                 min='1'
                 max='10'
                 required
-                className='p-3 border border-gray-300 rounded-lg'
+                className='p-3 border border-gray-300 rounded-lg text-black'
                 onChange={handleChange}
                 value={formData.bedrooms}
               />
@@ -280,7 +281,7 @@ export default function CreateListing() {
                 min='1'
                 max='10'
                 required
-                className='p-3 border border-gray-300 rounded-lg'
+                className='p-3 border border-gray-300 rounded-lg text-black'
                 onChange={handleChange}
                 value={formData.bathrooms}
               />
@@ -293,7 +294,7 @@ export default function CreateListing() {
                 min='50'
                 max='100000000'
                 required
-                className='p-3 border border-gray-300 rounded-lg'
+                className='p-3 border border-gray-300 rounded-lg text-black'
                 onChange={handleChange}
                 value={formData.regularPrice}
               />
@@ -310,7 +311,7 @@ export default function CreateListing() {
                   min='0'
                   max='10000000'
                   required
-                  className='p-3 border border-gray-300 rounded-lg'
+                  className='p-3 border border-gray-300 rounded-lg text-black'
                   onChange={handleChange}
                   value={formData.discountPrice}
                 />
