@@ -1,117 +1,141 @@
-import Link from 'next/link'
-import React from 'react'
-
-export default function Home() {
+import ListingItem from '@/components/ListingItem';
+import Link from 'next/link';
+export default async function Home() {
+  let rentListings = null;
+  try {
+    const result = await fetch(process.env.URL + '/api/listing/get', {
+      method: 'POST',
+      body: JSON.stringify({
+        type: 'rent',
+        limit: 4,
+        order: 'asc',
+      }),
+      cache: 'no-store',
+    });
+    const data = await result.json();
+    rentListings = data;
+  } catch (error) {
+    rentListings = { title: 'Failed to load listing' };
+  }
+  let saleListings = null;
+  try {
+    const result = await fetch(process.env.URL + '/api/listing/get', {
+      method: 'POST',
+      body: JSON.stringify({
+        type: 'sale',
+        limit: 4,
+        order: 'asc',
+      }),
+      cache: 'no-store',
+    });
+    const data = await result.json();
+    saleListings = data;
+  } catch (error) {
+    saleListings = { title: 'Failed to load listing' };
+  }
+  let offerListings = null;
+  try {
+    const result = await fetch(process.env.URL + '/api/listing/get', {
+      method: 'POST',
+      body: JSON.stringify({
+        limit: 4,
+        order: 'asc',
+        offer: true,
+      }),
+      cache: 'no-store',
+    });
+    const data = await result.json();
+    offerListings = data;
+  } catch (error) {
+    offerListings = { title: 'Failed to load listing' };
+  }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#204FA0] to-[#A6C7FF]">
-    
-
-     
-    <section className="py-20 px-6 text-center">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="font-rubik text-5xl font-bold text-white mb-6">
-          Find Your Perfect Home, Effortlessly
+    <div>
+      <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto'>
+        <h1 className='text-slate-700 font-bold text-3xl lg:text-6xl'>
+          Find your next <span className='text-slate-500'>perfect</span>
+          <br />
+          place with ease
         </h1>
-        <p className="font-dm-sans text-xl text-white mb-8">
-          RentEasy connects newcomers with flexible, semi-permanent housing and helps landlords reach an underserved market.
-        </p>
-        <div className="space-x-4">
-          <button className="bg-white text-[#204FA0] font-dm-sans font-medium px-8 py-3 rounded-full hover:bg-opacity-90 transition">
-            Get Started
-          </button>
-          <button className="bg-transparent border-2 border-white text-white font-dm-sans font-medium px-8 py-3 rounded-full hover:bg-white hover:text-[#204FA0] transition">
-            Learn More
-          </button>
+        <div className='text-gray-400 text-xs sm:text-sm'>
+          RentEasy is the best place to find your next perfect place to
+          live.
+          <br />
+          We have a wide range of properties for you to choose from.
         </div>
+        <Link
+          href={'/search'}
+          className='text-xs sm:text-sm text-blue-800 font-bold hover:underline'
+        >
+          Let&apos;s get started...
+        </Link>
       </div>
-    </section>
-    <section className="bg-white py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-rubik text-3xl font-bold text-[#204FA0] text-center mb-12">
-            Why Choose RentEasy?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <h3 className="font-rubik text-2xl font-bold text-[#282930] mb-4">
-                Tailored Search
-              </h3>
-              <p className="font-dm-sans text-[#5E5F66]">
-                Find housing that fits your needs with our advanced search tools.
-              </p>
+      <img
+        src='https://firebasestorage.googleapis.com/v0/b/renteasy-773f4.firebasestorage.app/o/harper-van-mourik-0yfWDwHOB0g-unsplash.jpg?alt=media&token=af92c546-7383-4958-9acd-b2eabc27b095'
+        className='w-full h-[550px] object-cover'
+      />
+      <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
+        {offerListings && offerListings.length > 0 && (
+          <div className=''>
+            <div className='my-3'>
+              <h2 className='text-2xl font-semibold text-slate-600'>
+                Recent Offers
+              </h2>
+              <Link
+                className='text-sm text-blue-800 hover:underline'
+                href={'/search?offer=true'}
+              >
+                Show more listings
+              </Link>
             </div>
-            <div className="text-center">
-              <h3 className="font-rubik text-2xl font-bold text-[#282930] mb-4">
-                Community Insights
-              </h3>
-              <p className="font-dm-sans text-[#5E5F66]">
-                Get to know your new neighborhood before you move in.
-              </p>
-            </div>
-            <div className="text-center">
-              <h3 className="font-rubik text-2xl font-bold text-[#282930] mb-4">
-                Easy Listings
-              </h3>
-              <p className="font-dm-sans text-[#5E5F66]">
-                Landlords can list properties in minutes and reach the right audience.
-              </p>
+            <div className='flex flex-wrap gap-4'>
+              {offerListings.map((listing) => (
+                <ListingItem listing={listing} key={listing.id} />
+              ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Testimonial Section */}
-      <section className="bg-[#F7F9FC] py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-rubik text-3xl font-bold text-[#204FA0] text-center mb-12">
-            What Our Users Say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <p className="font-dm-sans text-[#5E5F66] mb-4">
-                "RentEasy made finding a home so simple! The tailored search tools saved me so much time."
-              </p>
-              <p className="font-dm-sans text-[#204FA0] font-medium">
-                – Sarah, Newcomer
-              </p>
+        )}
+        {rentListings && rentListings.length > 0 && (
+          <div className=''>
+            <div className='my-3'>
+              <h2 className='text-2xl font-semibold text-slate-600'>
+                Recent places for rent
+              </h2>
+              <Link
+                className='text-sm text-blue-800 hover:underline'
+                href={'/search?type=rent'}
+              >
+                Show more places for rent
+              </Link>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <p className="font-dm-sans text-[#5E5F66] mb-4">
-                "As a landlord, RentEasy helped me connect with the right tenants quickly and easily."
-              </p>
-              <p className="font-dm-sans text-[#204FA0] font-medium">
-                – John, Landlord
-              </p>
+            <div className='flex flex-wrap gap-4'>
+              {rentListings.map((listing) => (
+                <ListingItem listing={listing} key={listing.id} />
+              ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-[#282930] py-12 px-6 text-white">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="font-rubik text-xl font-bold mb-4">RentEasy</h3>
-            <p className="font-dm-sans text-[#A6C7FF]">
-              Your trusted partner in finding flexible housing solutions.
-            </p>
+        )}
+        {saleListings && saleListings.length > 0 && (
+          <div className=''>
+            <div className='my-3'>
+              <h2 className='text-2xl font-semibold text-slate-600'>
+                Recent places for sale
+              </h2>
+              <Link
+                className='text-sm text-blue-800 hover:underline'
+                href={'/search?type=sale'}
+              >
+                Show more places for sale
+              </Link>
+            </div>
+            <div className='flex flex-wrap gap-4'>
+              {saleListings.map((listing) => (
+                <ListingItem listing={listing} key={listing.id} />
+              ))}
+            </div>
           </div>
-          <div>
-            <h4 className="font-rubik text-lg font-bold mb-4">Quick Links</h4>
-            <ul className="font-dm-sans space-y-2">
-              <li><a href="#" className="hover:text-[#A6C7FF]">Home</a></li>
-              <li><a href="#" className="hover:text-[#A6C7FF]">About</a></li>
-              <li><a href="#" className="hover:text-[#A6C7FF]">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-rubik text-lg font-bold mb-4">Contact Us</h4>
-            <p className="font-dm-sans">Email: support@renteasy.com</p>
-            <p className="font-dm-sans">Phone: +1 (123) 456-7890</p>
-          </div>
-        </div>
-      </footer>
+        )}
+      </div>
     </div>
-    
-
-  )
+  );
 }

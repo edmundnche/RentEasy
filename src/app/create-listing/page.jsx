@@ -13,7 +13,6 @@ import {
 
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function CreateListing() {
   const { isSignedIn, user, isLoaded } = useUser();
