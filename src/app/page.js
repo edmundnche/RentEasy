@@ -109,9 +109,10 @@ export default async function Home() {
               </Link>
             </div>
             <div className='flex flex-wrap gap-4'>
-              {rentListings.map((listing) => (
-                <ListingItem listing={listing} key={listing.id} />
+              {rentListings.map((listing, index) => (
+                <ListingItem listing={listing} key={listing.id || `listing-${index}`} />
               ))}
+
             </div>
           </div>
         )}
