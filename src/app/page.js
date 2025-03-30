@@ -13,7 +13,11 @@ export default async function Home() {
         body: JSON.stringify(body),
         cache: 'no-store',
       });
-      return await result.json();
+
+      const data = await result.json();
+
+
+      return JSON.parse(JSON.stringify(data));
     } catch (error) {
       return { title: 'Failed to load listing' };
     }
@@ -26,79 +30,96 @@ export default async function Home() {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <div className="flex flex-col gap-6 p-12 px-6 max-w-6xl mx-auto text-center lg:text-left">
-        <h1 className="text-gray-800 font-extrabold text-4xl lg:text-6xl leading-tight">
-          Find your next <span className="text-blue-600">perfect</span> <br />
-          place with ease
-        </h1>
-        <p className="text-gray-500 text-sm sm:text-base">
-          RentEasy is the best place to find your next perfect place to live.
-          <br className="hidden sm:block" />
-          We have a wide range of properties for you to choose from.
-        </p>
-        <Link
-          href="/search"
-          className="text-sm sm:text-base text-blue-700 font-bold hover:underline"
-        >
-          Let&apos;s get started...
-        </Link>
+      <div className="flex flex-col gap-6 p-12 px-6 max-w-7xl mx-auto">
+        <div className="text-center lg:text-left space-y-6">
+          <h1 className="text-gray-900 font-bold text-4xl lg:text-5xl xl:text-6xl leading-tight tracking-tight">
+            Find your next <span className="text-blue-600">perfect</span> <br />
+            place with ease
+          </h1>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto lg:mx-0">
+            RentEasy is the best place to find your next perfect place to live.
+            <br className="hidden sm:block" />
+            We have a wide range of properties for you to choose from.
+          </p>
+          <div className="pt-2">
+            <Link
+              href="/search"
+              className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm"
+            >
+              Let&apos;s get started
+            </Link>
+          </div>
+        </div>
       </div>
 
       {/* Hero Image */}
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/renteasy-773f4.firebasestorage.app/o/harper-van-mourik-0yfWDwHOB0g-unsplash.jpg?alt=media&token=af92c546-7383-4958-9acd-b2eabc27b095"
-        className="w-full h-[550px] object-cover rounded-lg shadow-md"
-        alt="Hero"
-      />
+      <div className="max-w-7xl mx-auto px-6">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/renteasy-773f4.firebasestorage.app/o/happy-family-with-dog-moving-new-home.jpg?alt=media&token=c5b47e46-6ce6-4981-bcc9-30d8aa0ccefd"
+          className="w-full h-[500px] object-cover rounded-xl shadow-lg"
+          alt="Modern apartment building"
+        />
+      </div>
 
-      {/* Listings Section */}
-      <div className="max-w-6xl mx-auto p-6 flex flex-col gap-12 my-12">
-        {offerListings?.length > 0 && (
-          <ListingSection
-            title="Recent Offers"
-            listings={offerListings}
-            link="/search?offer=true"
-            linkText="Show more listings"
-          />
+      {/* Listings Sections */}
+      <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col gap-12 my-10">
+        {offerListings && offerListings.length > 0 && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between border-b pb-3">
+              <h2 className="text-2xl font-bold text-gray-800">Recent Offers</h2>
+              <Link
+                className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                href={'/search?offer=true'}
+              >
+                Show all offers →
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-6">
+              {offerListings.map((listing, index) => (
+                <ListingItem listing={listing} key={listing.id || `offer-${index}`} />
+              ))}
+            </div>
+          </div>
         )}
-        {rentListings?.length > 0 && (
-          <ListingSection
-            title="Recent places for rent"
-            listings={rentListings}
-            link="/search?type=rent"
-            linkText="Show more places for rent"
-          />
+
+        {rentListings && rentListings.length > 0 && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between border-b pb-3">
+              <h2 className="text-2xl font-bold text-gray-800">Recent Places for Rent</h2>
+              <Link
+                className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                href={'/search?type=rent'}
+              >
+                Show all rentals →
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-6">
+              {rentListings.map((listing, index) => (
+                <ListingItem listing={listing} key={listing.id || `rent-${index}`} />
+              ))}
+            </div>
+          </div>
         )}
-        {saleListings?.length > 0 && (
-          <ListingSection
-            title="Recent places for sale"
-            listings={saleListings}
-            link="/search?type=sale"
-            linkText="Show more places for sale"
-          />
+
+        {saleListings && saleListings.length > 0 && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between border-b pb-3">
+              <h2 className="text-2xl font-bold text-gray-800">Recent Places for Sale</h2>
+              <Link
+                className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                href={'/search?type=sale'}
+              >
+                Show all properties →
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-6">
+              {saleListings.map((listing, index) => (
+                <ListingItem listing={listing} key={listing.id || `sale-${index}`} />
+              ))}
+            </div>
+          </div>
         )}
       </div>
     </div>
   );
 }
-
-// Reusable Listing Section
-const ListingSection = ({ title, listings, link, linkText }) => (
-  <div>
-    <div className="flex justify-between items-center border-b pb-2">
-      <h2 className="text-2xl font-semibold text-gray-700">{title}</h2>
-      <Link href={link} className="text-sm text-blue-700 hover:underline">
-        {linkText}
-      </Link>
-    </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
-      {listings.map((listing, index) => (
-        <ListingItem
-          listing={listing}
-          key={listing.id || `listing-${index}`}
-        />
-      ))}
-    </div>
-  </div>
-);
-

@@ -1,49 +1,62 @@
 import Listing from '../../../../lib/models/listing.model.js';
 import { connect } from '../../../../lib/mongodb/mongoose.js';
+
+export const GET = async (req) => {
+    await connect();
+    const headers = req.headers;
+
+    try {
+        const url = new URL(req.url, `http://${headers.get('host')}`);
+        const userId = url.searchParams.get("user");
+
+        if (!userId) {
+            return new Response(JSON.stringify({ error: "User ID is required" }), { status: 400 });
+        }
+
+        const listings = await Listing.find({ userId }, 'title imageUrls price description');
+        const updatedListings = listings.map(listing => ({
+            ...listing.toObject(),
+            imageUrl: listing.imageUrls?.[0] || null
+        }));
+
+        return new Response(JSON.stringify(updatedListings), { status: 200 });
+    } catch (error) {
+        console.error('Error fetching listings:', error);
+        return new Response(JSON.stringify([]), { status: 500 });
+    }
+};
+
 export const POST = async (req) => {
     await connect();
-    const data = await req.json();
     try {
-        const startIndex = parseInt(data.startIndex) || 0;
-        const limit = parseInt(data.limit) || 9;
-        const sortDirection = data.order === 'asc' ? 1 : -1;
-        let offer = data.offer;
-        if (offer === undefined || offer === 'false') {
-            offer = { $in: [false, true] };
-        }
-        let furnished = data.furnished;
-        if (furnished === undefined || furnished === 'false') {
-            furnished = { $in: [false, true] };
-        }
-        let parking = data.parking;
-        if (parking === undefined || parking === 'false') {
-            parking = { $in: [false, true] };
-        }
-        let type = data.type;
-        if (type === undefined || type === 'all') {
-            type = { $in: ['sale', 'rent'] };
-        }
-        const listings = await Listing.find({
-            ...(data.userId && { userId: data.userId }),
-            ...(data.listingId && { _id: data.listingId }),
-            ...(data.searchTerm && {
-                $or: [
-                    { name: { $regex: data.searchTerm, $options: 'i' } },
-                    { description: { $regex: data.searchTerm, $options: 'i' } },
-                ],
-            }),
-            offer,
-            furnished,
-            parking,
+        const body = await req.json();
+
+        const {
+            searchTerm,
             type,
-        })
-            .sort({ updatedAt: sortDirection })
-            .skip(startIndex)
-            .limit(limit);
-        return new Response(JSON.stringify(listings), {
-            status: 200,
-        });
+            parking,
+            furnished,
+            offer,
+            sort = 'created_at',
+            order = 'desc',
+        } = body;
+
+        const query = {};
+
+        if (searchTerm) {
+            query.title = { $regex: searchTerm, $options: 'i' };
+        }
+        if (type && type !== 'all') query.type = type;
+        if (parking) query.parking = true;
+        if (furnished) query.furnished = true;
+        if (offer) query.offer = true;
+
+        const sortQuery = { [sort]: order === 'asc' ? 1 : -1 };
+
+        const listings = await Listing.find(query).sort(sortQuery).limit(9);
+        return new Response(JSON.stringify(listings), { status: 200 });
     } catch (error) {
-        console.log('Error getting posts:', error);
+        console.error("POST /api/listing/get error:", error);
+        return new Response(JSON.stringify([]), { status: 500 });
     }
 };

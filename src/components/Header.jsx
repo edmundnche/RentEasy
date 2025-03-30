@@ -2,7 +2,7 @@
 
 import { FaSearch } from 'react-icons/fa';
 import Link from 'next/link';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
@@ -10,6 +10,7 @@ export default function Header() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState('');
+    const { user } = useUser();
 
     useEffect(() => {
         const urlParams = new URLSearchParams(searchParams);
@@ -69,9 +70,17 @@ export default function Header() {
                         </span>
                     </Link>
 
-                    {/* User Authentication */}
+                    {/* Auth */}
                     <SignedIn>
-                        <UserButton />
+                        {user?.imageUrl && (
+                            <Link href='/profile'>
+                                <img
+                                    src={user.imageUrl}
+                                    alt='Profile'
+                                    className='h-8 w-8 rounded-full object-cover cursor-pointer'
+                                />
+                            </Link>
+                        )}
                     </SignedIn>
                     <SignedOut>
                         <Link href='/sign-in'>
