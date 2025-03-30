@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import ListingItem from '../../components/ListingItem';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+
 export default function Search() {
     const router = useRouter();
     const searchParams = useSearchParams();
