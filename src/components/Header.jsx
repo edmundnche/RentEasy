@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
+import logo from '@/image/logo.png';
 
 export default function Header() {
     const searchParams = useSearchParams();
@@ -32,12 +34,25 @@ export default function Header() {
         <header className='bg-white shadow-md sticky top-0 z-50'>
             <div className='flex justify-between items-center max-w-7xl mx-auto p-4'>
 
-                {/* Logo */}
-                <Link href='/'>
-                    <h1 className='text-2xl font-extrabold flex items-center space-x-1'>
-                        <span className='text-blue-600'>Rent</span>
-                        <span className='text-gray-800'>Easy</span>
-                    </h1>
+                 {/* logo */}
+            <Link 
+                    href="/" 
+                    onClick={(e) => {
+                        if (window.location.pathname === '/') {
+                            e.preventDefault();
+                            window.location.reload();
+                        }
+                    }}
+                    className='flex items-center'
+                >
+                    <Image 
+                        src={logo} 
+                        alt="RentEasy Logo"
+                        width={160}
+                        height={60}
+                        className='object-contain'
+                        priority
+                    />
                 </Link>
 
                 {/* Search Bar */}
