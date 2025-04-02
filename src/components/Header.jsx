@@ -37,13 +37,7 @@ export default function Header() {
                  {/* logo */}
             <Link 
                     href="/" 
-                    onClick={(e) => {
-                        if (window.location.pathname === '/') {
-                            e.preventDefault();
-                            window.location.reload();
-                        }
-                    }}
-                    className='flex items-center'
+                    
                 >
                     <Image 
                         src={logo} 
