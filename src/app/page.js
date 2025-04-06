@@ -58,16 +58,13 @@ export default async function Home() {
           </div>
 
           {/* Image - Right Side */}
-          <div className="md:w-1/2 h-[400px] relative rounded-xl overflow-hidden shadow-lg">
-            <Image
-              src="https://firebasestorage.googleapis.com/v0/b/renteasy-773f4.appspot.com/o/happy-family-with-dog-moving-new-home.jpg?alt=media"
-              alt="Happy family moving into new home"
-              fill
-              className="object-cover"
-              priority
-              unoptimized={true} 
-            />
-          </div>
+          <div className="max-w-7xl mx-auto px-6">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/renteasy-773f4.firebasestorage.app/o/happy-family-with-dog-moving-new-home.jpg?alt=media&token=c5b47e46-6ce6-4981-bcc9-30d8aa0ccefd"
+          className="w-full h-[500px] object-cover rounded-xl shadow-lg"
+          alt="Modern apartment building"
+        />
+      </div>
         </div>
       </div>
 
