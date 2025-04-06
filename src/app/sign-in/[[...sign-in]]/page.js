@@ -6,32 +6,53 @@ import { useRouter } from 'next/navigation';
 import { FaGoogle, FaFacebookF, FaTiktok } from 'react-icons/fa';
 
 export default function SignInPage() {
-    const { signIn, setActive } = useSignIn();
+    const { isLoaded, signIn, setActive } = useSignIn();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const handleSignIn = async () => {
+    const handleSignIn = async (e) => {
+        e.preventDefault();
+        if (!isLoaded) return;
+        
+        setIsLoading(true);
         try {
-            const res = await signIn.create({
+            const result = await signIn.create({
                 identifier: email,
                 password,
             });
-            await setActive({ session: res.createdSessionId });
-            router.push('/');
+
+            if (result.status === 'complete') {
+                await setActive({ session: result.createdSessionId });
+                router.push('/');
+            }
         } catch (err) {
             setError(err.errors?.[0]?.message || 'Sign-in failed');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleOAuth = (strategy) => {
-        signIn.authenticateWithRedirect({ strategy, redirectUrl: '/' });
+        if (!isLoaded) return;
+        signIn.authenticateWithRedirect({
+            strategy,
+            redirectUrl: '/sso-callback',
+            redirectUrlComplete: '/',
+        });
     };
+
+    if (!isLoaded) {
+        return <div className="flex justify-center items-center h-screen">
+            <p className="text-[#282930] font-dm-sans">Loading authentication...</p>
+        </div>;
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#E1ECFF] px-4">
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-[#E9EBEF] w-full max-w-md">
+            <form onSubmit={handleSignIn} className="bg-white p-8 rounded-xl shadow-sm border border-[#E9EBEF] w-full max-w-md">
                 <h2 className="text-3xl font-bold mb-6 text-center text-[#204FA0] font-rubik">
                     Welcome to <span className="text-[#282930]">RentEasy</span>
                 </h2>
@@ -47,6 +68,7 @@ export default function SignInPage() {
                         className="w-full border border-[#E9EBEF] p-3 rounded-lg focus:outline-none focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF] text-[#282930] font-dm-sans"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        required
                     />
                     <input
                         type="password"
@@ -54,12 +76,16 @@ export default function SignInPage() {
                         className="w-full border border-[#E9EBEF] p-3 rounded-lg focus:outline-none focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF] text-[#282930] font-dm-sans"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
                     <button
-                        onClick={handleSignIn}
-                        className="w-full bg-[#204FA0] text-white py-3 rounded-lg font-semibold hover:bg-[#153b7a] transition font-rubik"
+                        type="submit"
+                        disabled={isLoading}
+                        className={`w-full py-3 rounded-lg font-semibold text-white transition font-rubik ${
+                            isLoading ? 'bg-[#A6C7FF] cursor-not-allowed' : 'bg-[#204FA0] hover:bg-[#153b7a]'
+                        }`}
                     >
-                        Sign In
+                        {isLoading ? 'Signing In...' : 'Sign In'}
                     </button>
                 </div>
 
@@ -69,6 +95,7 @@ export default function SignInPage() {
 
                 <div className="flex gap-3">
                     <button
+                        type="button"
                         onClick={() => handleOAuth('oauth_google')}
                         className="flex-1 py-2 rounded-lg transition text-sm font-medium flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white font-dm-sans"
                     >
@@ -76,6 +103,7 @@ export default function SignInPage() {
                         Google
                     </button>
                     <button
+                        type="button"
                         onClick={() => handleOAuth('oauth_facebook')}
                         className="flex-1 py-2 rounded-lg transition text-sm font-medium flex items-center justify-center gap-2 bg-blue-800 hover:bg-blue-900 text-white font-dm-sans"
                     >
@@ -83,6 +111,7 @@ export default function SignInPage() {
                         Facebook
                     </button>
                     <button
+                        type="button"
                         onClick={() => handleOAuth('oauth_tiktok')}
                         className="flex-1 py-2 rounded-lg transition text-sm font-medium flex items-center justify-center gap-2 bg-black hover:bg-gray-900 text-white font-dm-sans"
                     >
@@ -97,7 +126,7 @@ export default function SignInPage() {
                         Sign up
                     </a>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }

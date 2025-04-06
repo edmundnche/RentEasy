@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { app } from '../../firebase';
 import {
@@ -8,7 +7,6 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
-
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
@@ -145,18 +143,23 @@ export default function CreateListing() {
     }
   };
 
-  if (!isLoaded) return <h1 className='text-center text-xl my-7 font-semibold'>Loading...</h1>;
-  if (!isSignedIn) return <h1 className='text-center text-xl my-7 font-semibold'>You are not authorized to view this page</h1>;
+  if (!isLoaded) return <h1 className='text-center text-xl my-7 font-semibold text-[#282930] font-rubik'>Loading...</h1>;
+  if (!isSignedIn) return <h1 className='text-center text-xl my-7 font-semibold text-[#282930] font-rubik'>You are not authorized to view this page</h1>;
 
   return (
     <main className='p-6 max-w-5xl mx-auto'>
-      <h1 className='text-4xl text-gray-900 font-bold text-center mb-10'>Create a Listing</h1>
+      <h1 className='text-4xl text-[#282930] font-bold text-center mb-10 font-rubik'>
+        Create a Listing
+      </h1>
 
       <form className='grid md:grid-cols-2 gap-6' onSubmit={handleSubmit}>
         {/* Left Panel */}
         <div className='flex flex-col gap-6'>
+          {/* Name Input */}
           <div className='space-y-2'>
-            <label htmlFor='name' className='text-gray-800 font-semibold'>Name</label>
+            <label htmlFor='name' className='text-[#282930] font-semibold font-dm-sans'>
+              Name
+            </label>
             <input
               type='text'
               id='name'
@@ -166,24 +169,30 @@ export default function CreateListing() {
               required
               onChange={handleChange}
               value={formData.name}
-              className='border border-gray-300 p-3 rounded-lg text-black w-full'
+              className='border border-[#A6C7FF] p-3 rounded-lg text-[#282930] w-full focus:outline-none focus:ring-2 focus:ring-[#204FA0] font-dm-sans'
             />
           </div>
 
+          {/* Description Textarea */}
           <div className='space-y-2'>
-            <label htmlFor='description' className='text-gray-800 font-semibold'>Description</label>
+            <label htmlFor='description' className='text-[#282930] font-semibold font-dm-sans'>
+              Description
+            </label>
             <textarea
               id='description'
               required
               onChange={handleChange}
               value={formData.description}
               placeholder='Describe your listing...'
-              className='border border-gray-300 p-3 rounded-lg text-black w-full h-32 resize-none'
+              className='border border-[#A6C7FF] p-3 rounded-lg text-[#282930] w-full h-32 resize-none focus:outline-none focus:ring-2 focus:ring-[#204FA0] font-dm-sans'
             />
           </div>
 
+          {/* Address Input */}
           <div className='space-y-2'>
-            <label htmlFor='address' className='text-gray-800 font-semibold'>Address</label>
+            <label htmlFor='address' className='text-[#282930] font-semibold font-dm-sans'>
+              Address
+            </label>
             <input
               type='text'
               id='address'
@@ -191,10 +200,11 @@ export default function CreateListing() {
               onChange={handleChange}
               value={formData.address}
               placeholder='e.g. 123 Main Street'
-              className='border border-gray-300 p-3 rounded-lg text-black w-full'
+              className='border border-[#A6C7FF] p-3 rounded-lg text-[#282930] w-full focus:outline-none focus:ring-2 focus:ring-[#204FA0] font-dm-sans'
             />
           </div>
 
+          {/* Checkbox Options */}
           <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
             {[
               { id: 'sale', label: 'Sell', checked: formData.type === 'sale' },
@@ -203,22 +213,25 @@ export default function CreateListing() {
               { id: 'furnished', label: 'Furnished', checked: formData.furnished },
               { id: 'offer', label: 'Offer', checked: formData.offer },
             ].map((item) => (
-              <label key={item.id} className='flex items-center gap-2 text-gray-800 font-medium'>
+              <label key={item.id} className='flex items-center gap-2 text-[#282930] font-medium font-dm-sans'>
                 <input
                   type='checkbox'
                   id={item.id}
                   onChange={handleChange}
                   checked={item.checked}
-                  className='w-4 h-4 accent-blue-600'
+                  className='w-4 h-4 text-[#204FA0] focus:ring-[#204FA0]'
                 />
                 <span>{item.label}</span>
               </label>
             ))}
           </div>
 
+          {/* Numeric Inputs */}
           <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
             <div>
-              <label htmlFor='bedrooms' className='text-gray-800 font-semibold'>Beds</label>
+              <label htmlFor='bedrooms' className='text-[#282930] font-semibold font-dm-sans'>
+                Beds
+              </label>
               <input
                 type='number'
                 id='bedrooms'
@@ -227,11 +240,13 @@ export default function CreateListing() {
                 required
                 onChange={handleChange}
                 value={formData.bedrooms}
-                className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                className='border border-[#A6C7FF] p-3 rounded-lg text-[#282930] w-full focus:outline-none focus:ring-2 focus:ring-[#204FA0] font-dm-sans'
               />
             </div>
             <div>
-              <label htmlFor='bathrooms' className='text-gray-800 font-semibold'>Baths</label>
+              <label htmlFor='bathrooms' className='text-[#282930] font-semibold font-dm-sans'>
+                Baths
+              </label>
               <input
                 type='number'
                 id='bathrooms'
@@ -240,11 +255,13 @@ export default function CreateListing() {
                 required
                 onChange={handleChange}
                 value={formData.bathrooms}
-                className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                className='border border-[#A6C7FF] p-3 rounded-lg text-[#282930] w-full focus:outline-none focus:ring-2 focus:ring-[#204FA0] font-dm-sans'
               />
             </div>
             <div>
-              <label htmlFor='regularPrice' className='text-gray-800 font-semibold'>Regular Price ($/mo)</label>
+              <label htmlFor='regularPrice' className='text-[#282930] font-semibold font-dm-sans'>
+                Regular Price ($/mo)
+              </label>
               <input
                 type='number'
                 id='regularPrice'
@@ -253,12 +270,14 @@ export default function CreateListing() {
                 required
                 onChange={handleChange}
                 value={formData.regularPrice}
-                className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                className='border border-[#A6C7FF] p-3 rounded-lg text-[#282930] w-full focus:outline-none focus:ring-2 focus:ring-[#204FA0] font-dm-sans'
               />
             </div>
             {formData.offer && (
               <div>
-                <label htmlFor='discountPrice' className='text-gray-800 font-semibold'>Discounted Price ($/mo)</label>
+                <label htmlFor='discountPrice' className='text-[#282930] font-semibold font-dm-sans'>
+                  Discounted Price ($/mo)
+                </label>
                 <input
                   type='number'
                   id='discountPrice'
@@ -267,7 +286,7 @@ export default function CreateListing() {
                   required
                   onChange={handleChange}
                   value={formData.discountPrice}
-                  className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                  className='border border-[#A6C7FF] p-3 rounded-lg text-[#282930] w-full focus:outline-none focus:ring-2 focus:ring-[#204FA0] font-dm-sans'
                 />
               </div>
             )}
@@ -276,9 +295,10 @@ export default function CreateListing() {
 
         {/* Right Panel */}
         <div className='flex flex-col gap-6'>
+          {/* Image Upload */}
           <div>
-            <p className='text-gray-900 font-semibold'>Images</p>
-            <p className='text-sm text-gray-600'>Upload up to 6 images. First image will be the cover.</p>
+            <p className='text-[#282930] font-semibold font-dm-sans'>Images</p>
+            <p className='text-sm text-[#5E5F66] font-dm-sans'>Upload up to 6 images. First image will be the cover.</p>
             <div className='flex items-center gap-3 mt-2'>
               <input
                 type='file'
@@ -286,28 +306,29 @@ export default function CreateListing() {
                 accept='image/*'
                 multiple
                 onChange={(e) => setFiles(e.target.files)}
-                className='border border-gray-300 p-3 rounded w-full'
+                className='border border-[#A6C7FF] p-3 rounded w-full font-dm-sans'
               />
               <button
                 type='button'
                 onClick={handleImageSubmit}
                 disabled={uploading}
-                className='border border-blue-600 text-blue-600 font-medium px-4 py-2 rounded hover:bg-blue-50 transition'
+                className='border border-[#204FA0] text-[#204FA0] font-medium px-4 py-2 rounded hover:bg-[#E1ECFF] transition font-dm-sans'
               >
                 {uploading ? 'Uploading...' : 'Upload'}
               </button>
             </div>
-            {imageUploadError && <p className='text-sm text-red-600 mt-2'>{imageUploadError}</p>}
+            {imageUploadError && <p className='text-sm text-[#FF3B30] mt-2 font-dm-sans'>{imageUploadError}</p>}
           </div>
 
+          {/* Image Previews */}
           <div className='space-y-2'>
             {formData.imageUrls.map((url, index) => (
-              <div key={url} className='flex justify-between items-center p-2 border rounded-lg'>
+              <div key={url} className='flex justify-between items-center p-2 border border-[#E9EBEF] rounded-lg'>
                 <img src={url} alt='listing' className='w-20 h-20 object-cover rounded' />
                 <button
                   type='button'
                   onClick={() => handleRemoveImage(index)}
-                  className='text-red-600 hover:underline'
+                  className='text-[#FF3B30] hover:underline font-dm-sans'
                 >
                   Delete
                 </button>
@@ -315,15 +336,16 @@ export default function CreateListing() {
             ))}
           </div>
 
+          {/* Submit Button */}
           <button
             type='submit'
             disabled={loading || uploading}
-            className='bg-blue-600 text-white font-semibold py-3 rounded-lg uppercase hover:opacity-90 transition'
+            className='bg-[#204FA0] text-white font-semibold py-3 rounded-lg uppercase hover:bg-[#153b7a] transition font-rubik'
           >
             {loading ? 'Creating...' : 'Create Listing'}
           </button>
 
-          {error && <p className='text-sm text-red-600'>{error}</p>}
+          {error && <p className='text-sm text-[#FF3B30] font-dm-sans'>{error}</p>}
         </div>
       </form>
     </main>

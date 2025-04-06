@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import ListingItem from '../../components/ListingItem';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-
 export default function Search() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -106,32 +105,34 @@ export default function Search() {
 
     return (
         <div className='flex flex-col md:flex-row'>
-            <aside className='p-6 md:w-80 bg-gray-50 border-r border-gray-200 min-h-screen'>
+            
+            <aside className='p-6 md:w-80 bg-[#E9EBEF] border-r border-[#A6C7FF] min-h-screen'>
                 <form onSubmit={handleSubmit} className='space-y-6'>
-
+                    
                     <div>
-                        <label htmlFor='searchTerm' className='block text-sm font-semibold text-gray-800 mb-1'>
+                        <label htmlFor='searchTerm' className='block text-sm font-semibold text-[#282930] mb-1 font-rubik'>
                             Search Term
                         </label>
                         <input
                             type='text'
                             id='searchTerm'
                             placeholder='Search listings...'
-                            className='w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400 text-gray-900 placeholder:text-gray-500'
+                            className='w-full p-3 border border-[#A6C7FF] rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#204FA0] focus:border-[#204FA0] text-[#282930] placeholder:text-[#5E5F66] font-dm-sans'
                             value={sidebardata.searchTerm}
                             onChange={handleChange}
                         />
                     </div>
 
+                 
                     <div>
-                        <span className='block text-sm font-semibold text-gray-800 mb-1'>Type</span>
-                        <div className='space-y-2 text-gray-700'>
+                        <span className='block text-sm font-semibold text-[#282930] mb-1 font-rubik'>Type</span>
+                        <div className='space-y-2 text-[#5E5F66] font-dm-sans'>
                             {['all', 'rent', 'sale'].map((type) => (
                                 <label key={type} className='flex items-center space-x-2'>
                                     <input
                                         type='checkbox'
                                         id={type}
-                                        className='w-5 h-5 text-blue-600'
+                                        className='w-5 h-5 text-[#204FA0] focus:ring-[#204FA0]'
                                         onChange={handleChange}
                                         checked={sidebardata.type === type}
                                     />
@@ -142,7 +143,7 @@ export default function Search() {
                                 <input
                                     type='checkbox'
                                     id='offer'
-                                    className='w-5 h-5 text-blue-600'
+                                    className='w-5 h-5 text-[#204FA0] focus:ring-[#204FA0]'
                                     onChange={handleChange}
                                     checked={sidebardata.offer}
                                 />
@@ -151,15 +152,16 @@ export default function Search() {
                         </div>
                     </div>
 
+                   
                     <div>
-                        <span className='block text-sm font-semibold text-gray-800 mb-1'>Amenities</span>
-                        <div className='space-y-2 text-gray-700'>
+                        <span className='block text-sm font-semibold text-[#282930] mb-1 font-rubik'>Amenities</span>
+                        <div className='space-y-2 text-[#5E5F66] font-dm-sans'>
                             {['parking', 'furnished'].map((amenity) => (
                                 <label key={amenity} className='flex items-center space-x-2'>
                                     <input
                                         type='checkbox'
                                         id={amenity}
-                                        className='w-5 h-5 text-blue-600'
+                                        className='w-5 h-5 text-[#204FA0] focus:ring-[#204FA0]'
                                         onChange={handleChange}
                                         checked={sidebardata[amenity]}
                                     />
@@ -169,15 +171,16 @@ export default function Search() {
                         </div>
                     </div>
 
+                  
                     <div>
-                        <label htmlFor='sort_order' className='block text-sm font-semibold text-gray-800 mb-1'>
+                        <label htmlFor='sort_order' className='block text-sm font-semibold text-[#282930] mb-1 font-rubik'>
                             Sort By
                         </label>
                         <select
                             id='sort_order'
                             onChange={handleChange}
                             defaultValue='created_at_desc'
-                            className='w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400 text-gray-900 bg-white'
+                            className='w-full p-3 border border-[#A6C7FF] rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#204FA0] focus:border-[#204FA0] text-[#282930] bg-white font-dm-sans'
                         >
                             <option value='regularPrice_desc'>Price: High to Low</option>
                             <option value='regularPrice_asc'>Price: Low to High</option>
@@ -186,9 +189,10 @@ export default function Search() {
                         </select>
                     </div>
 
+                   
                     <button
                         type='submit'
-                        className='w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition'
+                        className='w-full bg-[#204FA0] text-white py-3 rounded-lg font-semibold hover:bg-[#153b7a] transition font-rubik'
                     >
                         Search
                     </button>
@@ -196,13 +200,19 @@ export default function Search() {
             </aside>
 
             <main className='flex-1'>
-                <h1 className='text-3xl font-bold text-slate-800 p-6 border-b'>Listing Results</h1>
+                <h1 className='text-3xl font-bold text-[#282930] p-6 border-b border-[#A6C7FF] font-rubik'>
+                    Listing Results
+                </h1>
                 <div className='p-6 flex flex-wrap gap-6'>
                     {!loading && listings.length === 0 && (
-                        <p className='text-xl text-gray-600'>No listings found!</p>
+                        <p className='text-xl text-[#5E5F66] font-dm-sans w-full'>
+                            No listings found!
+                        </p>
                     )}
                     {loading && (
-                        <p className='text-xl text-gray-600 text-center w-full'>Loading...</p>
+                        <p className='text-xl text-[#5E5F66] text-center w-full font-dm-sans'>
+                            Loading...
+                        </p>
                     )}
                     {!loading &&
                         listings.map((listing) => (
@@ -211,7 +221,7 @@ export default function Search() {
                     {showMore && (
                         <button
                             onClick={onShowMoreClick}
-                            className='w-full text-center text-blue-600 hover:underline mt-6'
+                            className='w-full text-center text-[#204FA0] hover:text-[#A6C7FF] mt-6 font-dm-sans font-medium'
                         >
                             Show More
                         </button>
