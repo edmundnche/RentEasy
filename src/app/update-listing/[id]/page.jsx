@@ -161,22 +161,22 @@ export default function UpdateListing() {
     };
 
     if (!isLoaded) {
-        return <h1 className='text-center text-xl my-7 font-semibold'>Loading...</h1>;
+        return <h1 className='text-center text-xl my-7 font-semibold text-[#282930] font-rubik'>Loading...</h1>;
     }
 
     if (!isSignedIn) {
-        return <h1 className='text-center text-xl my-7 font-semibold'>You are not authorized to view this page</h1>;
+        return <h1 className='text-center text-xl my-7 font-semibold text-[#282930] font-rubik'>You are not authorized to view this page</h1>;
     }
 
     return (
         <main className='p-6 max-w-5xl mx-auto'>
-            <h1 className='text-4xl text-gray-900 font-bold text-center mb-10'>Update a Listing</h1>
+            <h1 className='text-4xl text-[#282930] font-bold text-center mb-10 font-rubik'>Update a Listing</h1>
 
             <form onSubmit={handleSubmit} className='grid md:grid-cols-2 gap-6'>
                 {/* Left */}
                 <div className='flex flex-col gap-6'>
                     <div className='space-y-2'>
-                        <label htmlFor='name' className='text-gray-800 font-semibold'>Name</label>
+                        <label htmlFor='name' className='text-[#282930] font-semibold font-dm-sans'>Name</label>
                         <input
                             type='text'
                             id='name'
@@ -185,7 +185,7 @@ export default function UpdateListing() {
                             required
                             onChange={handleChange}
                             value={formData.name}
-                            className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                            className='border border-[#E9EBEF] p-3 rounded-lg text-[#282930] w-full h-32 resize-none font-dm-sans focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF]'
                         />
                     </div>
 
@@ -196,7 +196,7 @@ export default function UpdateListing() {
                             required
                             onChange={handleChange}
                             value={formData.description}
-                            className='border border-gray-300 p-3 rounded-lg text-black w-full h-32 resize-none'
+                            className='border border-[#E9EBEF] p-3 rounded-lg text-[#282930] w-full h-32 resize-none font-dm-sans focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF]'
                         />
                     </div>
 
@@ -208,7 +208,7 @@ export default function UpdateListing() {
                             required
                             onChange={handleChange}
                             value={formData.address}
-                            className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                            className='border border-[#E9EBEF] p-3 rounded-lg text-[#282930] w-full h-32 resize-none font-dm-sans focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF]'
                         />
                     </div>
 
@@ -220,13 +220,13 @@ export default function UpdateListing() {
                             { id: 'furnished', label: 'Furnished', checked: formData.furnished },
                             { id: 'offer', label: 'Offer', checked: formData.offer },
                         ].map((item) => (
-                            <label key={item.id} className='flex items-center gap-2 text-gray-800 font-medium'>
+                            <label key={item.id} className='flex items-center gap-2 text-[#282930] font-medium font-dm-sans'>
                                 <input
                                     type='checkbox'
                                     id={item.id}
                                     onChange={handleChange}
                                     checked={item.checked}
-                                    className='w-4 h-4 accent-blue-600'
+                                    className='w-4 h-4 accent-[#204FA0]'
                                 />
                                 <span>{item.label}</span>
                             </label>
@@ -244,7 +244,7 @@ export default function UpdateListing() {
                                 required
                                 onChange={handleChange}
                                 value={formData.bedrooms}
-                                className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                                className='border border-[#E9EBEF] p-3 rounded-lg text-[#282930] w-full font-dm-sans focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF]'
                             />
                         </div>
                         <div>
@@ -257,7 +257,7 @@ export default function UpdateListing() {
                                 required
                                 onChange={handleChange}
                                 value={formData.bathrooms}
-                                className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                                className='border border-[#E9EBEF] p-3 rounded-lg text-[#282930] w-full font-dm-sans focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF]'
                             />
                         </div>
                         <div>
@@ -272,7 +272,7 @@ export default function UpdateListing() {
                                 required
                                 onChange={handleChange}
                                 value={formData.regularPrice}
-                                className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                                className='border border-[#E9EBEF] p-3 rounded-lg text-[#282930] w-full font-dm-sans focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF]'
                             />
                         </div>
                         {formData.offer && (
@@ -288,7 +288,7 @@ export default function UpdateListing() {
                                     required
                                     onChange={handleChange}
                                     value={formData.discountPrice}
-                                    className='border border-gray-300 p-3 rounded-lg text-black w-full'
+                                    className='border border-[#E9EBEF] p-3 rounded-lg text-[#282930] w-full font-dm-sans focus:border-[#204FA0] focus:ring-1 focus:ring-[#A6C7FF]'
                                 />
                             </div>
                         )}
@@ -298,8 +298,8 @@ export default function UpdateListing() {
                 {/* Right */}
                 <div className='flex flex-col gap-6'>
                     <div>
-                        <p className='text-gray-900 font-semibold'>Images</p>
-                        <p className='text-sm text-gray-600'>Upload up to 6 images. First image will be the cover.</p>
+                        <p className='text-[#282930] font-semibold font-dm-sans'>Images</p>
+                        <p className='text-sm text-[#5E5F66] font-dm-sans'>Upload up to 6 images. First image will be the cover.</p>
                         <div className='flex items-center gap-3 mt-2'>
                             <input
                                 type='file'
@@ -307,13 +307,13 @@ export default function UpdateListing() {
                                 accept='image/*'
                                 multiple
                                 onChange={(e) => setFiles(e.target.files)}
-                                className='border border-gray-300 p-3 rounded w-full'
+                                className='border border-[#E9EBEF] p-3 rounded w-full font-dm-sans'
                             />
                             <button
                                 type='button'
                                 onClick={handleImageSubmit}
                                 disabled={uploading}
-                                className='border border-blue-600 text-blue-600 font-medium px-4 py-2 rounded hover:bg-blue-50 transition'
+                                className='border border-[#204FA0] text-[#204FA0] font-medium px-4 py-2 rounded hover:bg-[#E1ECFF] transition font-dm-sans'
                             >
                                 {uploading ? 'Uploading...' : 'Upload'}
                             </button>
@@ -323,12 +323,12 @@ export default function UpdateListing() {
 
                     <div className='space-y-2'>
                         {formData.imageUrls.map((url, index) => (
-                            <div key={url} className='flex justify-between items-center p-2 border rounded-lg'>
+                            <div key={url} className='flex justify-between items-center p-2 border border-[#E9EBEF] rounded-lg'>
                                 <img src={url} alt='listing' className='w-20 h-20 object-cover rounded' />
                                 <button
                                     type='button'
                                     onClick={() => handleRemoveImage(index)}
-                                    className='text-red-600 hover:underline'
+                                    className='text-[#204FA0] hover:text-[#A6C7FF] hover:underline font-dm-sans'
                                 >
                                     Delete
                                 </button>
@@ -339,12 +339,12 @@ export default function UpdateListing() {
                     <button
                         type='submit'
                         disabled={loading || uploading}
-                        className='bg-blue-600 text-white font-semibold py-3 rounded-lg uppercase hover:opacity-90 transition'
+                        className='bg-[#204FA0] text-white font-semibold py-3 rounded-lg uppercase hover:bg-[#153b7a] transition font-rubik'
                     >
                         {loading ? 'Updating...' : 'Update Listing'}
                     </button>
 
-                    {error && <p className='text-sm text-red-600'>{error}</p>}
+                    {error && <p className='text-sm text-red-600 font-dm-sans'>{error}</p>}
                 </div>
             </form>
         </main>
