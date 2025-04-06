@@ -31,7 +31,7 @@ export default function Header() {
     };
 
     return (
-        <header className='bg-white shadow-md sticky top-0 z-50'>
+        <header className='bg-white shadow-sm sticky top-0 z-50'>
             <div className='flex justify-between items-center max-w-7xl mx-auto p-4'>
 
                  {/* logo */}
@@ -51,17 +51,17 @@ export default function Header() {
 
                 {/* Search Bar */}
                 <form
-                    className='flex items-center bg-gray-100 px-4 py-2 rounded-full shadow-sm transition-all w-40 sm:w-64 lg:w-96'
+                    className='flex items-center bg-[#E1ECFF] px-4 py-2 rounded-full shadow-sm transition-all w-40 sm:w-64 lg:w-96 border border-[#A6C7FF]'
                     onSubmit={handleSubmit}
                 >
                     <input
                         type='text'
                         placeholder='Search listings...'
-                        className='bg-transparent focus:outline-none text-gray-700 flex-grow placeholder-gray-400'
+                        className='bg-transparent focus:outline-none text-[#282930] flex-grow placeholder-[#5E5F66] font-dm-sans text-sm'
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    <button className='text-gray-600 hover:text-gray-900'>
+                    <button className='text-[#5E5F66] hover:text-[#204FA0]'>
                         <FaSearch className='w-5 h-5' />
                     </button>
                 </form>
@@ -69,12 +69,12 @@ export default function Header() {
                 {/* Navigation Links */}
                 <nav className='flex items-center gap-6'>
                     <Link href='/'>
-                        <span className='hidden md:block text-gray-700 font-medium hover:text-blue-600 transition'>
+                        <span className='hidden md:block text-[#282930] font-rubik font-medium hover:text-[#204FA0] transition'>
                             Home
                         </span>
                     </Link>
                     <Link href='/about'>
-                        <span className='hidden md:block text-gray-700 font-medium hover:text-blue-600 transition'>
+                        <span className='hidden md:block text-[#282930] font-rubik font-medium hover:text-[#204FA0] transition'>
                             About
                         </span>
                     </Link>
@@ -86,14 +86,14 @@ export default function Header() {
                                 <img
                                     src={user.imageUrl}
                                     alt='Profile'
-                                    className='h-8 w-8 rounded-full object-cover cursor-pointer'
+                                    className='h-8 w-8 rounded-full object-cover cursor-pointer border-2 border-[#A6C7FF]'
                                 />
                             </Link>
                         )}
                     </SignedIn>
                     <SignedOut>
                         <Link href='/sign-in'>
-                            <span className='text-gray-700 font-medium hover:text-blue-600 transition'>
+                            <span className='text-[#204FA0] font-rubik font-medium hover:text-[#A6C7FF] transition bg-[#E1ECFF] px-4 py-2 rounded-full'>
                                 Sign In
                             </span>
                         </Link>
