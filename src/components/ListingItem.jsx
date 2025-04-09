@@ -4,7 +4,7 @@ import { MdLocationOn } from 'react-icons/md';
 export default function ListingItem({ listing }) {
     return (
         <Link href={`/listing/${listing._id}`} className="block transform transition-transform duration-300 hover:scale-105">
-  <div className="bg-white shadow-md hover:shadow-xl transition-shadow rounded-xl overflow-hidden w-full sm:w-[370px] border border-[#E9EBEF] hover:border-[#204FA0]">
+            <div className="bg-white shadow-md hover:shadow-xl transition-shadow rounded-xl overflow-hidden w-full sm:w-[300px] border border-[#E9EBEF] hover:border-[#204FA0]">
 
                 {/* Image Section */}
                 <div className="relative">
@@ -14,7 +14,7 @@ export default function ListingItem({ listing }) {
                             'https://via.placeholder.com/400x250?text=No+Image'
                         }
                         alt='Listing Cover'
-                        className='h-[250px] sm:h-[230px] w-full object-cover transition-transform duration-300'
+                        className='h-[220px] sm:h-[200px] w-full object-cover transition-transform duration-300'
                     />
                     {listing.offer && (
                         <span className="absolute top-3 left-3 bg-[#204FA0] text-white text-xs font-semibold px-3 py-1 rounded-md shadow-md font-rubik">
