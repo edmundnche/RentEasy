@@ -31,6 +31,12 @@ export const POST = async (req) => {
     try {
         const body = await req.json();
 
+        // 🔧 Check for listingId first
+        if (body?.listingId) {
+            const listing = await Listing.findById(body.listingId);
+            return new Response(JSON.stringify([listing]), { status: 200 });
+        }
+
         const {
             searchTerm,
             type,
